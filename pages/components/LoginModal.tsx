@@ -22,7 +22,8 @@ import {
     useColorModeValue,
 } from '@chakra-ui/react'
 import * as React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { PostMassageType } from '../../types'
 // import { Logo } from './Logo'
 import { OAuthButtonGroup } from './OAuthButtonGroup'
 
@@ -32,6 +33,7 @@ const LoginModal = () => {
     const onOpen = () => {
         setIsOpen(true)
     }
+
     return <div>
         <Button onClick={onOpen}>Open Modal</Button>
 

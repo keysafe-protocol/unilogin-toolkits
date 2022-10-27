@@ -21,7 +21,8 @@ export const OAuthButtonGroup = () => {
             `https://github.com/login/oauth/authorize?${queryString.stringify(
                 config
             )}`,
-            "oauth"
+            "",
+            'popup'
         );
     }
     return <ButtonGroup variant="outline" spacing="4" width="full">
