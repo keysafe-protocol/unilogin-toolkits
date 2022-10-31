@@ -16,49 +16,74 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
+    Spinner,
     Stack,
     Text,
     useBreakpointValue,
     useColorModeValue,
 } from '@chakra-ui/react'
+import { useLocalStorageState, useRequest } from 'ahooks'
+import _ from 'lodash'
 import * as React from 'react'
 import { useEffect, useState } from 'react'
-import { PostMassageType } from '../../types'
+import { getUserInfo, oAuthLogin } from '../../services/httpClient'
 // import { Logo } from './Logo'
 import { OAuthButtonGroup } from './OAuthButtonGroup'
+import PostmessageReciever from './PostmessageReciever'
 
 const LoginModal = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const onClose = () => { }
+    const [code, setCode] = useState('')
+    const [token, setToken] = useLocalStorageState('token')
+    const onClose = () => {
+        setIsOpen(false)
+    }
     const onOpen = () => {
         setIsOpen(true)
     }
+    const { data, run, loading } = useRequest<any, any>(() => oAuthLogin(code), {
+        throttleWait: 300,
+        ready: !!code
+    });
+    useEffect(() => { }, [data])
+
+    const { data: userinfo } = useRequest(getUserInfo, {
+        ready: data
+    })
+    console.log(userinfo)
+
+
 
     return <div>
         <Button onClick={onOpen}>Open Modal</Button>
+        <PostmessageReciever onMessage={(code) => { setCode(code); onClose() }} />
+        {
+            loading ? <Spinner /> : <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>UNILOGIN</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Text fontSize="xl">CONTINUE WITH</Text>
 
-        <Modal isOpen={isOpen} onClose={onClose} >
-            <ModalOverlay />
-            <ModalContent>
-                <ModalHeader>Modal Title</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                    <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
-                        <Stack spacing="6">
-                            <OAuthButtonGroup />
-                        </Stack>
-                    </Container>
+                        <Container maxW="lg" py={{ base: '6', md: '12' }} px={{ base: '0', sm: '8' }}>
+                            <Stack spacing="6">
+                                <OAuthButtonGroup />
+                            </Stack>
+                        </Container>
+                        <div>
+                        </div>
 
-                </ModalBody>
+                    </ModalBody>
 
-                {/* <ModalFooter>
-                    <Button colorScheme='blue' mr={3} onClick={onClose}>
-                        Close
+                    {/* <ModalFooter>
+                    <Button colorScheme='blue' mr={3} onClick={() => { getUserInfo() }}>
+                        Confirm
                     </Button>
-                    <Button variant='ghost'>Secondary Action</Button>
                 </ModalFooter> */}
-            </ModalContent>
-        </Modal >
+                </ModalContent>
+            </Modal >
+        }
     </div>
 }
 export default LoginModal

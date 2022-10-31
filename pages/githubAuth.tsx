@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import queryString from "query-string";
 import { useCountDown, useRequest } from "ahooks";
-import { PostMassageType } from "../types";
+import { EPostMessageType } from "../types";
 import { Button } from "@chakra-ui/react";
-import PostMessageReciever from "./components/PostMessageReciever";
 
 const OAuthResult = (props: any) => {
     const postedRef = useRef(false);
@@ -20,19 +19,17 @@ const OAuthResult = (props: any) => {
         }
         return undefined;
     }, [search]);
-    console.log(code)
     const { loading, error } = useRequest(async () => {
-        console.log(postedRef.current)
-        console.log(window.opener.location)
-        
         if (code && window.opener && !postedRef.current) {
             postedRef.current = true;
+
             window.opener.postMessage(
                 {
-                    type: 'test',
+                    type: EPostMessageType.GITHUB_OAUTH,
                     data: code
                 }
             );
+            window.close()
             // setTargetDate(
             //     dayjs()
             //         .add(3, "s")
@@ -58,7 +55,7 @@ const OAuthResult = (props: any) => {
             //     return Error();
             // }
         }
-    });
+    }, { ready: !!code });
     return (
         <section>
             <div className="flex justify-center pt-20">
@@ -68,7 +65,7 @@ const OAuthResult = (props: any) => {
                     </div>
                 ) : (
                     <div className="text-center text-basecolor text-lg">
-                        Authorization is successful, this page will close in{" "}
+                        Authorization is successful, this page will close!
                         {/* <strong>{formatCountDown(countDown)}</strong> seconds. */}
                     </div>
                 )}

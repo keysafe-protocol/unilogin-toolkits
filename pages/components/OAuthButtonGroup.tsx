@@ -1,6 +1,9 @@
 import { Button, ButtonGroup, VisuallyHidden } from '@chakra-ui/react'
 import { GitHubIcon, GoogleIcon, TwitterIcon } from './ProviderIcons'
 import queryString from "query-string"
+import { EPostMessageType } from '../../types'
+import { oAuthLogin } from '../../services/httpClient'
+import _ from 'lodash'
 
 const providers = [
     { name: 'GitHub', icon: <GitHubIcon boxSize="5" /> },
@@ -8,7 +11,7 @@ const providers = [
     { name: 'Twitter', icon: <TwitterIcon boxSize="5" /> },
 ]
 type TOauth = 'GitHub' | 'Google' | 'Twitter' | string
-export const GITHUB_CLIENT_ID = "44ecdb87c3b5ac2efdde";
+export const GITHUB_CLIENT_ID = "7cc8a185c9ff45b7a0ab";
 
 export const OAuthButtonGroup = () => {
     const handleOauth = (name: TOauth) => {
