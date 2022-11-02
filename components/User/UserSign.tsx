@@ -1,7 +1,7 @@
 import { Box, Button, Input } from '@chakra-ui/react';
 import React, { useState } from 'react'
-import { sign } from '../../../services/httpClient';
-import { useLoading } from '../Loading/LoadingContext';
+import { sign } from '../../services/httpClient';
+import useLoading from '../Loading/LoadingContext';
 
 export default function UserSign() {
     const [signMessage, setSignMessage] = useState('')

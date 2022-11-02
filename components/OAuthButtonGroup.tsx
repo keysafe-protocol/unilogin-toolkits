@@ -1,10 +1,8 @@
 import { Button, ButtonGroup, VisuallyHidden } from '@chakra-ui/react'
 import { GitHubIcon, GoogleIcon, TwitterIcon } from './ProviderIcons'
 import queryString from "query-string"
-import { EPostMessageType } from '../../types'
-import { oAuthLogin } from '../../services/httpClient'
 import _ from 'lodash'
-import { useLoading } from './Loading/LoadingContext'
+import useLoading from './Loading/LoadingContext'
 
 const providers = [
     { name: 'GitHub', icon: <GitHubIcon boxSize="5" /> },
@@ -40,3 +38,4 @@ export const OAuthButtonGroup = () => {
         ))}
     </ButtonGroup>
 }
+export default OAuthButtonGroup

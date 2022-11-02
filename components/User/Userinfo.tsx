@@ -1,8 +1,8 @@
 import { Box, Button, Input } from '@chakra-ui/react'
 import { useRequest } from 'ahooks'
 import React, { useState } from 'react'
-import { getUserInfo, sign } from '../../../services/httpClient'
-import { useLoading } from '../Loading/LoadingContext'
+import { getUserInfo, sign } from '../../services/httpClient'
+import useLoading from '../Loading/LoadingContext'
 import Transfer from './Transfer'
 import UserSign from './UserSign'
 import { utils } from "ethers";

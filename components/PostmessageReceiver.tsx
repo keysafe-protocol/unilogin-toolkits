@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react'
-import { EPostMessageType } from '../../types'
+import { EPostMessageType } from '../types'
 
 interface TPostmessageReceiver {
     onMessage: (data: string) => void

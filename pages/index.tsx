@@ -1,6 +1,6 @@
 import styles from '../styles/Home.module.css'
-import { LoadingProvider } from './components/Loading/LoadingContext'
-import LoginModal from './components/LoginModal'
+import { LoadingProvider } from '../components/Loading/LoadingContext'
+import LoginModal from '../components/LoginModal'
 
 export default function Home() {
 

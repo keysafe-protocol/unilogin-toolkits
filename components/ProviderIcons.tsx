@@ -43,3 +43,4 @@ export const TwitterIcon = createIcon({
         />
     ),
 })
+export default TwitterIcon
