@@ -13,11 +13,19 @@ export async function oAuthLogin(code: string) {
 }
 export async function getUserInfo() {
   const token = localStorage.getItem("token");
-  const res = await httpClient.get(
-    "/user_info",
+  return httpClient.get("/user_info", { headers: { authorization: token } });
+}
+export async function transfer() {
+  const token = localStorage.getItem("token");
+  return httpClient.get("/user_info", { headers: { authorization: token } });
+}
+export async function sign(message: string) {
+  const token = localStorage.getItem("token");
+  return httpClient.post(
+    "/sign",
+    { message },
     { headers: { authorization: token } }
   );
-  console.log(res);
 }
 
 httpClient.interceptors.response.use(

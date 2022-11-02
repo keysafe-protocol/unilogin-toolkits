@@ -19,46 +19,51 @@ import {
     Spinner,
     Stack,
     Text,
-    useBreakpointValue,
-    useColorModeValue,
 } from '@chakra-ui/react'
-import { useLocalStorageState, useRequest } from 'ahooks'
+import { useRequest } from 'ahooks'
 import _ from 'lodash'
 import * as React from 'react'
 import { useEffect, useState } from 'react'
-import { getUserInfo, oAuthLogin } from '../../services/httpClient'
+import { oAuthLogin } from '../../services/httpClient'
+import Loading from './Loading/Loading'
+import { useLoading } from './Loading/LoadingContext'
 // import { Logo } from './Logo'
 import { OAuthButtonGroup } from './OAuthButtonGroup'
-import PostmessageReciever from './PostmessageReciever'
+import PostmessageReceiver from './PostmessageReceiver'
+import Userinfo from './User/Userinfo'
 
 const LoginModal = () => {
+    const { setLoading } = useLoading()
     const [isOpen, setIsOpen] = useState(false)
     const [code, setCode] = useState('')
-    const [token, setToken] = useLocalStorageState('token')
+    const [token, setToken] = useState<string | null>('')
     const onClose = () => {
         setIsOpen(false)
     }
     const onOpen = () => {
         setIsOpen(true)
     }
-    const { data, run, loading } = useRequest<any, any>(() => oAuthLogin(code), {
+    const { data, loading } = useRequest<any, any>(() => oAuthLogin(code), {
         throttleWait: 300,
-        ready: !!code
+        ready: !!code,
+        onBefore: () => { setLoading(true) },
+        onSuccess: () => { setToken(localStorage.getItem('token')) },
+        onFinally: () => { setLoading(false) },
     });
-    useEffect(() => { }, [data])
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        setToken(token)
+    }, [])
 
-    const { data: userinfo } = useRequest(getUserInfo, {
-        ready: data
-    })
-    console.log(userinfo)
 
 
 
     return <div>
-        <Button onClick={onOpen}>Open Modal</Button>
-        <PostmessageReciever onMessage={(code) => { setCode(code); onClose() }} />
+        {token ? <Userinfo /> : <Button onClick={onOpen}>Login with unilogin</Button>}
+
+        <PostmessageReceiver onMessage={(code) => { setCode(code); onClose() }} />
         {
-            loading ? <Spinner /> : <Modal isOpen={isOpen} onClose={onClose}>
+            loading ? <Loading /> : <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>UNILOGIN</ModalHeader>
@@ -77,10 +82,10 @@ const LoginModal = () => {
                     </ModalBody>
 
                     {/* <ModalFooter>
-                    <Button colorScheme='blue' mr={3} onClick={() => { getUserInfo() }}>
-                        Confirm
-                    </Button>
-                </ModalFooter> */}
+            <Button colorScheme='blue' mr={3} onClick={() => { getUserInfo() }}>
+                Confirm
+            </Button>
+        </ModalFooter> */}
                 </ModalContent>
             </Modal >
         }

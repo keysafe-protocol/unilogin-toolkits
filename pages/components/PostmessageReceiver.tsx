@@ -1,10 +1,10 @@
 import React, { FC, useEffect } from 'react'
 import { EPostMessageType } from '../../types'
 
-interface TPostmessageReciever {
+interface TPostmessageReceiver {
     onMessage: (data: string) => void
 }
-const PostmessageReciever: FC<TPostmessageReciever> = ({ onMessage }) => {
+const PostmessageReceiver: FC<TPostmessageReceiver> = ({ onMessage }) => {
     useEffect(() => {
         const listener = (event: any) => {
             if (event.data.type === EPostMessageType.GITHUB_OAUTH) {
@@ -15,7 +15,7 @@ const PostmessageReciever: FC<TPostmessageReciever> = ({ onMessage }) => {
     }, [])
 
     return (
-        <div>PostmessageReciever</div>
+        <></>
     )
 }
-export default PostmessageReciever
+export default PostmessageReceiver

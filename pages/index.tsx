@@ -1,15 +1,15 @@
-import { Button } from '@chakra-ui/react'
-import Head from 'next/head'
-import Image from 'next/image'
-import { useEffect } from 'react'
 import styles from '../styles/Home.module.css'
+import { LoadingProvider } from './components/Loading/LoadingContext'
 import LoginModal from './components/LoginModal'
-import PostMessageReciever from './components/PostmessageReciever'
 
 export default function Home() {
+
   return (
-    <div className={styles.container}>Unilogin
-      <LoginModal />
-    </div>
+    <LoadingProvider>
+      <div className={styles.container}>
+        <h1 className={styles.header}>Unilogin Demo (ETH goerli testnet)</h1>
+        <LoginModal />
+      </div>
+    </LoadingProvider>
   )
 }

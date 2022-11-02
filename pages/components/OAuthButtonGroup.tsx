@@ -4,6 +4,7 @@ import queryString from "query-string"
 import { EPostMessageType } from '../../types'
 import { oAuthLogin } from '../../services/httpClient'
 import _ from 'lodash'
+import { useLoading } from './Loading/LoadingContext'
 
 const providers = [
     { name: 'GitHub', icon: <GitHubIcon boxSize="5" /> },
@@ -14,7 +15,9 @@ type TOauth = 'GitHub' | 'Google' | 'Twitter' | string
 export const GITHUB_CLIENT_ID = "7cc8a185c9ff45b7a0ab";
 
 export const OAuthButtonGroup = () => {
+    const { setLoading } = useLoading()
     const handleOauth = (name: TOauth) => {
+        setLoading(true)
         const config = {
             client_id: GITHUB_CLIENT_ID,
             redirect_uri: `${window.location.origin}/githubAuth`,
