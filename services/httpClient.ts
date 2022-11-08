@@ -1,9 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 const httpClient = axios.create({
-  baseURL:
-    process.env.NODE_ENV === "development"
-      ? "/ks"
-      : "https://demo.keysafe.network:30002",
+  baseURL: "/ks",
 });
 export async function oAuthLogin(code: string) {
   const res: any = await httpClient.post("/auth_github_oauth", {
