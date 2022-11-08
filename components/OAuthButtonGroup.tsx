@@ -29,7 +29,7 @@ export const OAuthButtonGroup = () => {
             'popup'
         );
     }
-    return <ButtonGroup variant="outline" spacing="4" width="full">
+    return <ButtonGroup mt={4} variant="outline" spacing="4" width="full">
         {providers.map(({ name, icon }) => (
             <Button disabled={name !== 'GitHub'} onClick={() => { handleOauth(name) }} key={name} width="full">
                 <VisuallyHidden>Sign in with {name}</VisuallyHidden>

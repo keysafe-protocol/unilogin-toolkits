@@ -25,6 +25,7 @@ import _ from 'lodash'
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { oAuthLogin } from '../services/httpClient'
+import EmailLogin from './EmailLogin'
 import Loading from './Loading/Loading'
 import useLoading from './Loading/LoadingContext'
 // import { Logo } from './Logo'
@@ -68,17 +69,14 @@ const LoginModal = () => {
                 <ModalContent>
                     <ModalHeader>UNILOGIN</ModalHeader>
                     <ModalCloseButton />
-                    <ModalBody>
-                        <Text fontSize="xl">CONTINUE WITH</Text>
+                    <ModalBody mb={5}>
+                        <Container maxW="lg" px={{ base: '0', sm: '2' }}>
+                            <Text my={2} fontSize="xl">CONTINUE WITH</Text>
+                            <OAuthButtonGroup />
+                            <Divider my={6} />
+                            <EmailLogin />
 
-                        <Container maxW="lg" py={{ base: '6', md: '12' }} px={{ base: '0', sm: '8' }}>
-                            <Stack spacing="6">
-                                <OAuthButtonGroup />
-                            </Stack>
                         </Container>
-                        <div>
-                        </div>
-
                     </ModalBody>
 
                     {/* <ModalFooter>
